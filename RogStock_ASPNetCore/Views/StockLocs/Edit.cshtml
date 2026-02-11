@@ -1,0 +1,65 @@
+﻿@* @model RogStock_ASPNetCore.Models_RogStock.StockLoc *@
+@model RogStock_ASPNetCore.ViewModels.clsStockLocsViewModel
+
+@* 
+  Note: In order to use the custom view class use: Model.
+        to refer to the sub tables/lists
+
+*@
+
+@{
+    ViewData["Title"] = "Edit Location";
+}
+
+<h1>Edit</h1>
+
+<h4>Stock Location</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="tblStockLoc.LocId" />
+            <div class="form-group">
+                <label asp-for="tblStockLoc.LocItemId" class="control-label"></label>
+                <input asp-for="tblStockLoc.LocItemId" class="form-control" />
+                <span asp-validation-for="tblStockLoc.LocItemId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblStockLoc.LocLocation" class="control-label"></label>
+                <div class="dropdown">
+                    <select asp-for="tblStockLoc.LocLocation" asp-items="@Model.lstStockLocations">
+                        <option value="0">Please select</option>
+                    </select>
+                </div>
+                <span asp-validation-for="tblStockLoc.LocLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblStockLoc.LocQty" class="control-label"></label>
+                <input asp-for="tblStockLoc.LocQty" class="form-control" />
+                <span asp-validation-for="tblStockLoc.LocQty" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="tblStockLoc.LocNonNet" /> @Html.DisplayNameFor(model => model.tblStockLoc.LocNonNet)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblStockLoc.LocDescription" class="control-label"></label>
+                <input asp-for="tblStockLoc.LocDescription" class="form-control" />
+                <span asp-validation-for="tblStockLoc.LocDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

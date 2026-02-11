@@ -1,0 +1,68 @@
+﻿@* @model RogStock_ASPNetCore.Models_RogStock.StockItem *@
+@model RogStock_ASPNetCore.ViewModels.clsStockItemViewModel
+
+@{
+    ViewData["Title"] = "Edit Stock Item";
+}
+
+<h1>Edit</h1>
+
+<h4>Stock Item</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="tblStockItem.StkiId" />
+            <div class="form-group">
+                <label asp-for="tblStockItem.StkiItemId" class="control-label"></label>
+                <input asp-for="tblStockItem.StkiItemId" class="form-control" readonly="true" />
+                <span asp-validation-for="tblStockItem.StkiItemId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblStockItem.StkiProductFamily" class="control-label"></label>
+                <div class="dropdown">
+                    <select asp-for="tblStockItem.StkiProductFamily" asp-items="@Model.lstStockProductFamilies">
+                        <option value="0">Please select</option>
+                    </select>
+                </div>
+                <span asp-validation-for="tblStockItem.StkiProductFamily" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblStockItem.StkiUom" class="control-label"></label>
+                <div class="dropdown">
+                    <select asp-for="tblStockItem.StkiUom" asp-items="@Model.lstStockUoms">
+                        <option value="0">Please select</option>
+                    </select>
+                </div>
+                <span asp-validation-for="tblStockItem.StkiUom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblStockItem.StkiPrice" class="control-label"></label>
+                <input asp-for="tblStockItem.StkiPrice" class="form-control" />
+                <span asp-validation-for="tblStockItem.StkiPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblStockDescription.StkdDesc" class="control-label"></label>
+                <input asp-for="tblStockDescription.StkdDesc" class="form-control" />
+                <span asp-validation-for="tblStockDescription.StkdDesc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblStockDescription.StkdLongDesc" class="control-label"></label>
+                <input asp-for="tblStockDescription.StkdLongDesc" class="form-control" />
+                <span asp-validation-for="tblStockDescription.StkdLongDesc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

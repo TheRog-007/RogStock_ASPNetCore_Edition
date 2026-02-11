@@ -1,0 +1,65 @@
+﻿@* @model RogStock_ASPNetCore.Models_RogStock.StockLot *@
+@model RogStock_ASPNetCore.ViewModels.clsStockLotsViewModel
+
+@* 
+  Note: In order to use the custom view class use: Model.
+        to refer to the sub tables/lists
+
+*@
+
+@{
+    ViewData["Title"] = "Create Lot";
+}
+
+<h1>Create</h1>
+
+<h4>Stock Lots</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="tblStockLot.LotItemId" class="control-label"></label>
+                <div class="dropdown">
+                    <select asp-for="tblStockLot.LotItemId" asp-items="@Model.lstStockItems">
+                        <option value="0">Please select</option>
+                    </select>
+                </div>
+                <span asp-validation-for="tblStockLot.LotItemId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblStockLot.LotQty" class="control-label"></label>
+                <input asp-for="tblStockLot.LotQty" class="form-control" />
+                <span asp-validation-for="tblStockLot.LotQty" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="tblStockLot.LotNonNet" /> @Html.DisplayNameFor(model => model.tblStockLot.LotNonNet)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="tblStockLot.LotLocation" class="control-label"></label>
+                <div class="dropdown">
+                    <select asp-for="tblStockLot.LotLocation" asp-items="@Model.lstStockLocations">
+                        <option value="0">Please select</option>
+                    </select>
+                </div>
+                <span asp-validation-for="tblStockLot.LotLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

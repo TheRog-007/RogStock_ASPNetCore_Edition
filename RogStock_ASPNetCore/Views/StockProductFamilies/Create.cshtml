@@ -1,0 +1,38 @@
+﻿@model RogStock_ASPNetCore.Models_RogStock.StockProductFamily
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>StockProductFamily</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StkpProductFamily" class="control-label"></label>
+                <input asp-for="StkpProductFamily" class="form-control" />
+                <span asp-validation-for="StkpProductFamily" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StkpDesc" class="control-label"></label>
+                <input asp-for="StkpDesc" class="form-control" />
+                <span asp-validation-for="StkpDesc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,332 @@
+﻿@model RogStock_ASPNetCore.ViewModels.clsAdjustQuantityViewModel
+
+@{
+    ViewData["Title"] = "Adjust Stock Quantities";
+
+}
+
+<h1>Adjust Stock Quantities</h1>
+
+<h4>Stock Adjustment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditStockQuantity">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Select Stock Item ID</label>
+                <div class="dropdown">
+                    <select asp-for="strItemID" asp-items="@Model.lstStockItems" id="cmbStockItems" onchange="OnChangeStockItem()" >
+                        <option value="0">Please Select</option>
+                    </select>
+                </div>
+                <span asp-validation-for="strItemID" class="text-danger"></span>
+            </div>
+
+            @* <label class="control-label">Locations/Lots For: @Model.strItemID</label> *@
+            <table class="table table-hover table-responsive-sm display" id="tblLocations">
+                <thead>
+                    <tr>
+                        <th>
+                            Location ID
+                        </th>
+                        <th>
+                            Location
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Qty
+                        </th>
+                        <th>
+                            Org Qty
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+            @{
+                int intRowLoc = 0;
+                string strQtyLoc = String.Empty;
+                string strLocLoc = String.Empty;
+                string strLocDesc = String.Empty;
+                string strOrgQtyLoc = String.Empty;
+                string strRowLoc = String.Empty;
+                string strLocID = String.Empty;
+
+                if (Model.lstLocationsForEdit.Count > 0)
+                {
+                    @foreach(RogStock_ASPNetCore.ViewModels.clsAdjustQuantityViewModel.clsLocationsForEdit item in Model.lstLocationsForEdit)
+                    {
+                        strQtyLoc = intRowLoc.ToString() + "txtQtyLoc";
+                        strOrgQtyLoc = intRowLoc.ToString() + "txtOrgQtyLoc";
+                        strLocLoc = intRowLoc.ToString() + "txtLocLoc";
+                        strLocDesc = intRowLoc.ToString() + "txtLocDescLoc";
+                        strRowLoc = intRowLoc.ToString();
+                        strLocID = intRowLoc.ToString() + "txtLocID";
+
+                        <table class="table table-hover table-responsive-sm display">
+                            <tbody>
+                                <tr id="@strRowLoc">
+                                        <td>
+                                             <input value="@Html.DisplayFor(modelitem => item.LocId)" id="@strLocID" readonly />
+                                        </td>
+                                        <td>
+                                             <input value="@Html.DisplayFor(modelitem => item.Location)" id="@strLocLoc" readonly/>
+                                        </td>
+                                        <td>
+                                        <input value="@Html.DisplayFor(modelitem => item.LocationDesc)" id="@strLocDesc" readonly >
+                                        </td>
+                                        <td>
+                                            <input id=@strQtyLoc name=@strQtyLoc value="@Html.DisplayFor(modelItem => item.LocQty)" />
+                                        </td>
+                                        <td>
+                                        <input id=@strOrgQtyLoc name=@strOrgQtyLoc value="@Html.DisplayFor(modelItem => item.LocOriginalQty)" readonly >
+                                        </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                       intRowLoc++;
+                     }
+                 }
+            }
+
+
+            <table class="table table-hover table-responsive-sm display" id="tblLots">
+                <thead>
+                    <tr>
+                        <th>
+                            Lot ID
+                        </th>
+                        <th>
+                            Location
+                        </th>
+                        <th>
+                            Qty
+                        </th>
+                        <th>
+                            Org Qty
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+            @{
+                int intRowLot = 0;
+                string strQtyLot = String.Empty;
+                string strLocLot = String.Empty;
+                string strOrgQtyLot = String.Empty;
+                string strRowLot = String.Empty;
+                string strLotID = String.Empty;
+
+                if (Model.lstLotsForEdit.Count > 0)
+                {
+                    @foreach (RogStock_ASPNetCore.ViewModels.clsAdjustQuantityViewModel.clsLotsForEdit item in Model.lstLotsForEdit)
+                    {
+                        strQtyLot = intRowLot.ToString() + "txtQtyLot";
+                        strOrgQtyLot = intRowLot.ToString() + "txtOrgQtyLot";
+                        strLocLot = intRowLot.ToString() + "txtLocLot";
+                        strRowLot = intRowLot.ToString();
+                        strLotID = intRowLot.ToString() + "txtLotID";
+
+                        <table class="table table-hover table-responsive-sm display">
+                            <tbody>
+                                <tr id="@strRowLot">
+                                    <td>
+                                        <input value="@Html.DisplayFor(modelitem => item.LotId)" id="@strLotID" readonly />
+                                    </td>
+                                    <td>
+                                        <input value="@Html.DisplayFor(modelitem => item.LotLocation)" id="@strLocLot" readonly />
+                                    </td>
+                                    <td>
+                                        <input id=@strQtyLot name=@strQtyLot value="@Html.DisplayFor(modelItem => item.LotQty)" />
+                                    </td>
+                                    <td>
+                                        <input id=@strOrgQtyLot name=@strOrgQtyLot value="@Html.DisplayFor(modelItem => item.LotOriginalQty)" readonly>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        intRowLot++;
+                    }
+                }
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <button onclick="BTNSave_OnClick()">Save Changes</button>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script type="text/javascript">
+       async function asyncSendJSON(strJSON)
+       {
+            const request = await fetch("https://localhost:44369/AdjustQuantity/ChangeStockQuantity",
+            {
+                 method: "POST",
+                 headers: {
+                             "Content-Type":"application/json",
+                          },
+                 dataType: 'JSON',
+                 body: JSON.stringify(strJSON) //need to do this else FETCh fails!
+            });
+            
+            if (!request.ok) 
+            {
+              throw new Error(`Request status: ${request.status}`);
+            }
+            else
+            {
+                try
+                {
+                    const response1 = await fetch(request);
+                }
+                catch (error)
+                {
+                    console.log(error.message);
+                }
+            }
+
+            console.log(response1.status);
+       }
+
+
+    function BTNSave_OnClick()
+    {
+        /*
+           Created 05/02/2026 By Roger Williams
+
+           Iterates through the table rows and create a JSON file from the
+           data and use FETCH to send it to the controller!
+
+        */
+
+         const tblLocations = document.getElementById("tblLocations");
+         const tblLots = document.getElementById("tblLots");
+         let intRow = 0;
+         let strJSON = "";
+
+    // {
+    //   "fruits": ["apple", "banana", "orange"],
+    //   "numbers": [1, 2, 3, 4]
+    // }
+
+       strJSON = `{` +
+                     `"Locations":` +
+                      "[";
+
+            intRow = 0;
+
+            //make JSON string from table data
+            while (intRow != -1)
+            {
+                 //check not exceeding table row limits!
+                 if (document.getElementById(intRow + "txtLocID") == null)
+                 {
+                     intRow = -1;
+                     console.log("end of table rows");
+                 }
+                 else
+                 {
+                     // Loop through rows
+                     strJSON = strJSON + `{` +                                
+                                         `"LocID":"` + document.getElementById(intRow + "txtLocID").value + `",`;
+                     strJSON = strJSON + `"Qty":"` +document.getElementById(intRow + "txtQtyLoc").value + `",`;
+                     strJSON = strJSON + `"OrgQty":"` +document.getElementById(intRow + "txtOrgQtyLoc").value + `"`;
+                     strJSON = strJSON + "},";
+                     intRow++;
+                 }
+            }
+
+       //trim trailing: , add: ]}
+       strJSON = strJSON.substring(0,strJSON.length-1) + "]";
+
+       //check if NO lots
+       if (document.getElementById("0txtLotID") == null)
+       {
+           //no lots
+           strJSON = strJSON + "}";
+       }
+       else
+       {
+           strJSON = strJSON + ",";
+           strJSON = strJSON + `"Lots":` +
+                               "[";
+
+           intRow = 0;
+
+           //make JSON string from table data
+           while (intRow != -1)
+           {
+               //check not exceeding table row limits!
+               if (document.getElementById(intRow + "txtLotID") == null)
+               {
+                 intRow = -1;
+                 console.log("end of table rows");
+               }
+               else
+               {
+                 strJSON = strJSON + `{` +
+                                     `"LotID":"` + document.getElementById(intRow + "txtLotID").value + `",`;
+                 strJSON = strJSON + `"Qty":"` +document.getElementById(intRow + "txtQtyLot").value + `",`;
+                 strJSON = strJSON + `"OrgQty":"` +document.getElementById(intRow + "txtOrgQtyLot").value + `"`;
+                 strJSON = strJSON + "},";
+                 intRow++;
+               }
+            }
+
+            //trim trailing: , add: ]}
+            strJSON = strJSON.substring(0,strJSON.length-1) + "]}";
+       }
+
+  //     console.log(strJSON);
+       asyncSendJSON(strJSON);
+    };
+
+
+
+
+
+    function OnChangeStockItem() 
+    {
+        /*
+           Created 30/01/2026 By Roger Williams
+
+           Gets the selected item and passes it back to the controller
+           to get the loc/lot information
+
+        */
+
+        const cmbChosenStockItem = document.getElementById("cmbStockItems");
+        alert(cmbChosenStockItem.value);
+
+        //store chosen stock item
+        var param = cmbChosenStockItem.value;
+
+        //if user has select: Please Select - exit!
+        if (param == "Please Select")
+        {
+            return;
+        }
+
+        //below code adapted from internet example 28/01/2026
+        //construct URL to pass data back to controller action
+        var url = '@Url.Action("StockItemSelected", "AdjustQuantity", new { strItemID = "__param__" })';
+        window.location.href = url.replace('__param__', encodeURIComponent(param));
+    }
+
+
+
+</script>
+

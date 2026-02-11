@@ -1,0 +1,65 @@
+﻿@model IEnumerable<RogStock_ASPNetCore.Models_RogStock.StockItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StkiItemId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StkiProductFamily)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StkiLocLot)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StkiUom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StkiPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timestamp)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StkiItemId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StkiProductFamily)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StkiLocLot)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StkiUom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StkiPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Timestamp)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.StkiId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.StkiId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.StkiId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

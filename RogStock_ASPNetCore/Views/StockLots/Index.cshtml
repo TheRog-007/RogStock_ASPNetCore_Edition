@@ -1,0 +1,71 @@
+﻿@model IEnumerable<RogStock_ASPNetCore.Models_RogStock.StockLot>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LotItemId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LotId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LotUpdated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LotQty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LotNonNet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LotLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timestamp)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LotItemId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LotId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LotUpdated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LotQty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LotNonNet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LotLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Timestamp)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.LotId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.LotId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.LotId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
